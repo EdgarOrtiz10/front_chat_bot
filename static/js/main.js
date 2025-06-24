@@ -1,11 +1,4 @@
 
-function detectURLs(text) {
-  const urlRegex = /(https?:\/\/[^\s]+)/g;
-  return text.replace(urlRegex, function(url) {
-    return `<a href="${url}" target="_blank" style="color:#128c7e; text-decoration: underline;">${url}</a>`;
-  });
-}
-
 async function sendMessage() {
   const input = document.getElementById('userInput');
   const message = input.value.trim();
@@ -33,9 +26,7 @@ async function sendMessage() {
 
     const data = await response.json();
     const respuesta = data.respuesta || "Sin respuesta del servidor.";
-
-    loadingBubble.innerHTML = detectURLs(respuesta);
-    chatBox.scrollTop = chatBox.scrollHeight;
+    loadingBubble.textContent = respuesta;
 
   } catch (error) {
     loadingBubble.textContent = "❌ Error al contactar el backend.";
@@ -43,14 +34,3 @@ async function sendMessage() {
 
   input.value = "";
 }
-
-// Enviar con Enter
-document.addEventListener("DOMContentLoaded", () => {
-  const input = document.getElementById("userInput");
-  input.addEventListener("keypress", function(event) {
-    if (event.key === "Enter") {
-      event.preventDefault();
-      sendMessage();
-    }
-  });
-});

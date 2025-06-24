@@ -5,13 +5,13 @@ from app.routes import chat
 
 app = FastAPI()
 
-# Montar archivos estáticos (css, js)
+# Montar archivos estáticos (CSS/JS)
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
-# Incluir rutas de la app
+# Incluir rutas
 app.include_router(chat.router)
 
-# Redirigir raíz hacia el frontend
+# Redirigir / hacia /chat
 @app.get("/")
 def root():
     return RedirectResponse(url="/chat")
